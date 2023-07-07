@@ -15,6 +15,7 @@
  ********************************************************************************/
 import defaultGLSPModule from './base/di.config';
 import { glspAccessibilityModule } from './features/accessibility/di.config';
+import { glspShortcutHelpModule } from './features/accessibility/key-shortcut/di.config';
 import { glspMoveZoomModule } from './features/accessibility/move-zoom/di.config';
 import { glspResizeKeyModule } from './features/accessibility/resize-key-tool/di.config';
 import { glspSearchPaletteModule } from './features/accessibility/search/di.config';
@@ -63,10 +64,6 @@ export * from './base/tool-manager/glsp-tool-manager';
 export * from './base/view/mouse-tool';
 export * from './base/view/view-registry';
 export * from './container-modules';
-
-//
-// ------------------ Features ------------------
-export * from './base/view/mouse-tool';
 export * from './features/accessibility/resize-key-tool/resize-key-tool';
 export * from './features/accessibility/view-key-tools/deselect-key-tool';
 export * from './features/accessibility/view-key-tools/movement-key-tool';
@@ -167,5 +164,6 @@ export {
     svgMetadataModule,
     toolFeedbackModule,
     toolsModule,
-    validationModule
+    validationModule,
+    glspShortcutHelpModule
 };

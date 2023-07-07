@@ -15,20 +15,21 @@
  ********************************************************************************/
 
 import { ContainerModule } from 'inversify';
-import { configureShortcutHelpTool } from './key-shortcut/di.config';
-import { configureMoveZoom } from './move-zoom/di.config';
-import { configureResizeTools } from './resize-key-tool/di.config';
-import { configureSearchPaletteModule } from './search/di.config';
-import { configureViewKeyTools } from './view-key-tools/di.config';
+import { bindAsService, BindingContext, configureActionHandler, TYPES } from '~glsp-sprotty';
+import '../../../../css/key-shortcut.css';
+import { KeyShortcut, SetKeyShortcutAction } from './key-shortcut';
+import { KeyShortcutTool } from './key-shortcut-tool';
 
 /**
- * Enables the accessibility tools for a keyboard-only-usage
+ * Handles actions for displaying help/information about keyboard shortcuts.
  */
-export const glspAccessibilityModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+export const glspShortcutHelpModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
-    configureResizeTools(context);
-    configureViewKeyTools(context);
-    configureMoveZoom(context);
-    configureSearchPaletteModule(context);
     configureShortcutHelpTool(context);
 });
+
+export function configureShortcutHelpTool(context: BindingContext): void {
+    bindAsService(context, TYPES.IDefaultTool, KeyShortcutTool);
+    bindAsService(context, TYPES.IUIExtension, KeyShortcut);
+    configureActionHandler(context, SetKeyShortcutAction.KIND, KeyShortcut);
+}
