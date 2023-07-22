@@ -95,35 +95,55 @@ export class KeyShortcut extends AbstractUIExtension implements IActionHandler {
 
         const grouped = groupBy(registrations, k => k.group);
 
-        for (const [group, shortcuts] of Object.entries(grouped)) {
-            const groupDiv = document.createElement('div');
-            const menuTitle = document.createElement('h4');
-            menuTitle.innerText = group;
+        const groupTable = document.createElement('table');
+        const tableHead = document.createElement('thead');
+        const tableBody = document.createElement('tbody');
 
-            groupDiv.appendChild(menuTitle);
+        const headerRow = document.createElement('tr');
+        const commandCell = document.createElement('th');
+        const keybindingCell = document.createElement('th');
 
-            shortcuts.forEach(s => groupDiv.appendChild(this.createEntry(s)));
+        commandCell.classList.add('columnTitle');
+        commandCell.classList.add('columnTitle');
 
-            this.shortcutsContainer.append(groupDiv);
+        commandCell.innerText = 'Command';
+        keybindingCell.innerText = 'Keybinding';
+
+        headerRow.appendChild(commandCell);
+        headerRow.appendChild(keybindingCell);
+        tableHead.appendChild(headerRow);
+
+        for (const [, shortcuts] of Object.entries(grouped)) {
+            shortcuts.forEach(s => {
+                tableBody.appendChild(this.createEntry(s));
+            });
         }
+
+        groupTable.appendChild(tableHead);
+        groupTable.appendChild(tableBody);
+
+        this.shortcutsContainer.append(groupTable);
     }
-    protected getShortcutHTML(shortcuts: string[]): string {
-        return shortcuts.map(key => `<kbd>${key}</kbd>`).join(' + ');
+    protected getShortcutHTML(shortcuts: string[]): HTMLElement {
+        const shortcutKeys = document.createElement('span');
+        shortcutKeys.innerHTML = shortcuts.map(key => `<kbd>${key}</kbd>`).join(' + ');
+
+        return shortcutKeys;
     }
 
     protected createEntry(registration: KeyShortcutInterface): HTMLDivElement {
-        const divElem = document.createElement('div');
-        const shortcutElement = document.createElement('p');
-        const descElement = document.createElement('p');
+        const entryRow = document.createElement('tr');
+        const shortcutElement = document.createElement('td');
+        const descElement = document.createElement('td');
 
-        divElem.classList.add('shortcut-entry-container');
-        descElement.textContent = registration.description;
-        shortcutElement.innerHTML += this.getShortcutHTML(registration.shortcuts);
+        const shortcut = this.getShortcutHTML(registration.shortcuts);
+        descElement.innerText = registration.description;
 
-        divElem.appendChild(shortcutElement);
-        divElem.appendChild(descElement);
+        shortcutElement.appendChild(shortcut);
+        entryRow.appendChild(descElement);
+        entryRow.appendChild(shortcutElement);
 
-        return divElem;
+        return entryRow;
     }
 
     protected initializeContents(containerElement: HTMLElement): void {
