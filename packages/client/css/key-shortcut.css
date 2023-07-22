@@ -17,7 +17,7 @@
 .keyboard-shortcuts-menu {
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f8f8f8;
+    background-color: #ededee;
     margin-bottom: 20px;
     position: absolute;
     display: flex;
@@ -65,7 +65,15 @@
     flex-direction: column;
     max-height: 100%;
     padding: 10px;
+    padding-top: 3px;
     overflow: auto;
+    right: 40px;
+    top: 25px;
+    text-align: left;
+    display: block;
+    z-index: 1000;
+    color: black;
+    user-select: none;
 }
 
 .shortcut-entry-container {
@@ -76,15 +84,25 @@
 
 #key-shortcut-close-btn {
     position: absolute;
-    top: 5px;
+    top: 14px;
     right: 5px;
     font-size: 16px;
     font-weight: bold;
-    background-color: #fff;
+    background: #cccccc;
     border: none;
     cursor: pointer;
 }
 
 .columnTitle {
     text-align: left;
+}
+
+.menu-header {
+    padding: 0.4em;
+    text-align: left;
+    background: #cccccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }

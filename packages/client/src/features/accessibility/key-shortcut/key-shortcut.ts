@@ -152,12 +152,13 @@ export class KeyShortcut extends AbstractUIExtension implements IActionHandler {
 
         // create title
         const menuTitle = document.createElement('h3');
+        menuTitle.classList.add('menu-header');
         menuTitle.innerText = 'Keyboard Shortcuts';
         this.container.appendChild(menuTitle);
 
         const closeBtn = document.createElement('button');
         closeBtn.id = 'key-shortcut-close-btn';
-        closeBtn.textContent = 'X';
+        closeBtn.textContent = 'x';
         closeBtn.addEventListener('click', () => {
             this.hide();
         });
