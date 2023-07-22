@@ -18,7 +18,7 @@ import { inject, injectable } from 'inversify';
 import { matchesKeystroke } from 'sprotty/lib/utils/keyboard';
 import { Action, KeyListener, KeyTool, SetUIExtensionVisibilityAction, SModelElement, Tool, TYPES } from '~glsp-sprotty';
 import { GLSPActionDispatcher } from '../../../base/action-dispatcher';
-import { KeyShortcutProvider, SetKeyShortcutAction } from '../key-shortcut/key-shortcut';
+import { AccessibleKeyShortcutProvider, SetAccessibleKeyShortcutAction } from '../key-shortcut/key-shortcut';
 import { SearchAutocompletePalette } from './search-palette';
 @injectable()
 export class SearchAutocompletePaletteTool implements Tool {
@@ -42,7 +42,7 @@ export class SearchAutocompletePaletteTool implements Tool {
     }
 }
 
-export class SearchAutocompletePaletteKeyListener extends KeyListener implements KeyShortcutProvider {
+export class SearchAutocompletePaletteKeyListener extends KeyListener implements AccessibleKeyShortcutProvider {
     protected readonly token = Symbol(SearchAutocompletePalette.name);
 
     constructor(protected tool: SearchAutocompletePaletteTool) {
@@ -52,7 +52,7 @@ export class SearchAutocompletePaletteKeyListener extends KeyListener implements
     registerShortcutKey(): void {
         this.tool.actionDispatcher.onceModelInitialized().then(() => {
             this.tool.actionDispatcher.dispatchAll([
-                SetKeyShortcutAction.create(this.token, [
+                SetAccessibleKeyShortcutAction.create(this.token, [
                     { shortcuts: ['CTRL', 'F'], description: 'Activate search for elements', group: 'Search', position: 0 }
                 ])
             ]);

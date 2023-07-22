@@ -21,7 +21,7 @@ import { GLSPActionDispatcher } from '../../../base/action-dispatcher';
 import { SelectionService } from '../../../base/selection-service';
 import { GLSPTool } from '../../../base/tool-manager/glsp-tool-manager';
 import { GridSnapper } from '../../change-bounds/snap';
-import { KeyShortcutProvider, SetKeyShortcutAction } from '../key-shortcut/key-shortcut';
+import { AccessibleKeyShortcutProvider, SetAccessibleKeyShortcutAction } from '../key-shortcut/key-shortcut';
 import { MoveElementAction, MoveViewportAction } from '../move-zoom/move-handler';
 
 /**
@@ -54,7 +54,7 @@ export class MovementKeyTool implements GLSPTool {
     }
 }
 
-export class MoveKeyListener extends KeyListener implements KeyShortcutProvider {
+export class MoveKeyListener extends KeyListener implements AccessibleKeyShortcutProvider {
     // Default x distance used if GridSnapper is not provided
     static readonly defaultMoveX = 20;
 
@@ -76,7 +76,7 @@ export class MoveKeyListener extends KeyListener implements KeyShortcutProvider 
     registerShortcutKey(): void {
         this.tool.actionDispatcher.onceModelInitialized().then(() => {
             this.tool.actionDispatcher.dispatchAll([
-                SetKeyShortcutAction.create(this.token, [
+                SetAccessibleKeyShortcutAction.create(this.token, [
                     { shortcuts: ['⬅  ⬆  ➡  ⬇'], description: 'Move element or viewport', group: 'Move', position: 0 }
                 ])
             ]);

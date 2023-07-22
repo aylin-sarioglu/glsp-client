@@ -18,7 +18,7 @@ import { inject, injectable } from 'inversify';
 import { matchesKeystroke } from 'sprotty/lib/utils/keyboard';
 import { Action, KeyListener, KeyTool, SetUIExtensionVisibilityAction, SModelElement } from '~glsp-sprotty';
 import { BaseGLSPTool } from '../../tools/base-glsp-tool';
-import { KeyShortcut } from './key-shortcut';
+import { AccessibleKeyShortcut } from './key-shortcut';
 
 @injectable()
 export class KeyShortcutTool extends BaseGLSPTool {
@@ -45,7 +45,7 @@ export class ShortcutKeyListener extends KeyListener {
     protected readonly token = Symbol(ShortcutKeyListener.name);
     override keyDown(element: SModelElement, event: KeyboardEvent): Action[] {
         if (this.matchesActivateShortcutHelpKeystroke(event)) {
-            return [SetUIExtensionVisibilityAction.create({ extensionId: KeyShortcut.ID, visible: true })];
+            return [SetUIExtensionVisibilityAction.create({ extensionId: AccessibleKeyShortcut.ID, visible: true })];
         }
         return [];
     }

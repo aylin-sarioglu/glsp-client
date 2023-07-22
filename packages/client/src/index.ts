@@ -46,6 +46,7 @@ export * from './base/view/view-registry';
 // ------------------ Misc ------------------
 export * from './default-modules';
 export * from './features/accessibility/accessibility-module';
+export * from './features/accessibility/key-shortcut/key-shortcut-tool';
 export * from './features/accessibility/move-zoom/move-zoom-module';
 export * from './features/accessibility/resize-key-tool/resize-key-module';
 export * from './features/accessibility/resize-key-tool/resize-key-tool';

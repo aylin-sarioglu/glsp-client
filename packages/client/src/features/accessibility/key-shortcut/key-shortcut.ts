@@ -18,44 +18,44 @@ import { injectable } from 'inversify';
 import { groupBy } from 'lodash';
 import { AbstractUIExtension, Action, IActionHandler, ICommand, matchesKeystroke, SModelRoot } from '~glsp-sprotty';
 
-export interface KeyShortcutProvider {
+export interface AccessibleKeyShortcutProvider {
     registerShortcutKey(): void;
 }
 
-export interface KeyShortcutInterface {
+export interface AccessibleKeyShortcutInterface {
     shortcuts: string[];
     description: string;
     group: string;
     position: number;
 }
 
-export interface SetKeyShortcutAction extends Action {
-    kind: typeof SetKeyShortcutAction.KIND;
+export interface SetAccessibleKeyShortcutAction extends Action {
+    kind: typeof SetAccessibleKeyShortcutAction.KIND;
     token: symbol;
-    keys: KeyShortcutInterface[];
+    keys: AccessibleKeyShortcutInterface[];
 }
 
-export namespace SetKeyShortcutAction {
-    export const KIND = 'setKeyShortcut';
+export namespace SetAccessibleKeyShortcutAction {
+    export const KIND = 'setAccessibleKeyShortcut';
 
-    export function is(object: any): object is SetKeyShortcutAction {
+    export function is(object: any): object is SetAccessibleKeyShortcutAction {
         return Action.hasKind(object, KIND);
     }
 
-    export function create(token: symbol, keys: KeyShortcutInterface[]): SetKeyShortcutAction {
+    export function create(token: symbol, keys: AccessibleKeyShortcutInterface[]): SetAccessibleKeyShortcutAction {
         return { kind: KIND, token, keys };
     }
 }
 
 @injectable()
-export class KeyShortcut extends AbstractUIExtension implements IActionHandler {
+export class AccessibleKeyShortcut extends AbstractUIExtension implements IActionHandler {
     static ID = 'key-shortcut';
     protected container: HTMLDivElement;
     protected shortcutsContainer: HTMLDivElement;
-    protected registrations: { [key: symbol]: KeyShortcutInterface[] } = {};
+    protected registrations: { [key: symbol]: AccessibleKeyShortcutInterface[] } = {};
 
     handle(action: Action): ICommand | Action | void {
-        if (SetKeyShortcutAction.is(action)) {
+        if (SetAccessibleKeyShortcutAction.is(action)) {
             this.registrations[action.token] = action.keys;
             if (this.containerElement !== undefined) {
                 this.refreshUI();
@@ -63,10 +63,10 @@ export class KeyShortcut extends AbstractUIExtension implements IActionHandler {
         }
     }
     id(): string {
-        return KeyShortcut.ID;
+        return AccessibleKeyShortcut.ID;
     }
     containerClass(): string {
-        return KeyShortcut.ID;
+        return AccessibleKeyShortcut.ID;
     }
 
     override show(root: Readonly<SModelRoot>, ...contextElementIds: string[]): void {
@@ -131,7 +131,7 @@ export class KeyShortcut extends AbstractUIExtension implements IActionHandler {
         return shortcutKeys;
     }
 
-    protected createEntry(registration: KeyShortcutInterface): HTMLDivElement {
+    protected createEntry(registration: AccessibleKeyShortcutInterface): HTMLDivElement {
         const entryRow = document.createElement('tr');
         const shortcutElement = document.createElement('td');
         const descElement = document.createElement('td');
@@ -182,7 +182,7 @@ export class KeyShortcut extends AbstractUIExtension implements IActionHandler {
         this.refreshUI();
     }
 
-    values(obj: { [key: symbol]: KeyShortcutInterface[] }): KeyShortcutInterface[] {
+    values(obj: { [key: symbol]: AccessibleKeyShortcutInterface[] }): AccessibleKeyShortcutInterface[] {
         return Object.getOwnPropertySymbols(obj).flatMap(s => obj[s]);
     }
 }

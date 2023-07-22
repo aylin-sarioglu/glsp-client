@@ -21,7 +21,7 @@ import { GLSPActionDispatcher } from '../../../base/action-dispatcher';
 import { SelectionService } from '../../../base/selection-service';
 import { GLSPTool } from '../../../base/tool-manager/glsp-tool-manager';
 import { IMovementRestrictor } from '../../change-bounds/movement-restrictor';
-import { KeyShortcutProvider, SetKeyShortcutAction } from '../key-shortcut/key-shortcut';
+import { AccessibleKeyShortcutProvider, SetAccessibleKeyShortcutAction } from '../key-shortcut/key-shortcut';
 import { ResizeElementAction, ResizeType } from './resize-key-handler';
 
 @injectable()
@@ -52,7 +52,7 @@ export class ResizeKeyTool implements GLSPTool {
     }
 }
 @injectable()
-export class ResizeKeyListener extends KeyListener implements KeyShortcutProvider {
+export class ResizeKeyListener extends KeyListener implements AccessibleKeyShortcutProvider {
     protected isEditMode = false;
     protected readonly token = Symbol(ResizeKeyListener.name);
 
@@ -63,7 +63,7 @@ export class ResizeKeyListener extends KeyListener implements KeyShortcutProvide
     registerShortcutKey(): void {
         this.tool.actionDispatcher.onceModelInitialized().then(() => {
             this.tool.actionDispatcher.dispatchAll([
-                SetKeyShortcutAction.create(this.token, [
+                SetAccessibleKeyShortcutAction.create(this.token, [
                     { shortcuts: ['ALT', 'A'], description: 'Activate resize mode for selected element', group: 'Resize', position: 0 },
                     { shortcuts: ['+'], description: 'Increase size of element', group: 'Resize', position: 1 },
                     { shortcuts: ['-'], description: 'Increase size of element', group: 'Resize', position: 2 },

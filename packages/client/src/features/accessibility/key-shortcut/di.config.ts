@@ -17,7 +17,7 @@
 import { ContainerModule } from 'inversify';
 import { bindAsService, BindingContext, configureActionHandler, TYPES } from '~glsp-sprotty';
 import '../../../../css/key-shortcut.css';
-import { KeyShortcut, SetKeyShortcutAction } from './key-shortcut';
+import { AccessibleKeyShortcut, SetAccessibleKeyShortcutAction } from './key-shortcut';
 import { KeyShortcutTool } from './key-shortcut-tool';
 
 /**
@@ -30,6 +30,6 @@ export const glspShortcutHelpModule = new ContainerModule((bind, unbind, isBound
 
 export function configureShortcutHelpTool(context: BindingContext): void {
     bindAsService(context, TYPES.IDefaultTool, KeyShortcutTool);
-    bindAsService(context, TYPES.IUIExtension, KeyShortcut);
-    configureActionHandler(context, SetKeyShortcutAction.KIND, KeyShortcut);
+    bindAsService(context, TYPES.IUIExtension, AccessibleKeyShortcut);
+    configureActionHandler(context, SetAccessibleKeyShortcutAction.KIND, AccessibleKeyShortcut);
 }

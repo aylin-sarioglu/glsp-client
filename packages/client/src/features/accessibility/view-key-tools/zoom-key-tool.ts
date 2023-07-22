@@ -20,7 +20,7 @@ import { Action, CenterAction, KeyListener, KeyTool, SModelElement, TYPES } from
 import { GLSPActionDispatcher } from '../../../base/action-dispatcher';
 import { SelectionService } from '../../../base/selection-service';
 import { GLSPTool } from '../../../base/tool-manager/glsp-tool-manager';
-import { SetKeyShortcutAction } from '../key-shortcut/key-shortcut';
+import { SetAccessibleKeyShortcutAction } from '../key-shortcut/key-shortcut';
 import { ZoomElementAction, ZoomViewportAction } from '../move-zoom/zoom-handler';
 
 /**
@@ -64,7 +64,7 @@ export class ZoomKeyListener extends KeyListener {
     registerShortcutKey(): void {
         this.tool.actionDispatcher.onceModelInitialized().then(() => {
             this.tool.actionDispatcher.dispatchAll([
-                SetKeyShortcutAction.create(this.token, [
+                SetAccessibleKeyShortcutAction.create(this.token, [
                     { shortcuts: ['+'], description: 'Zoom in to element or viewport', group: 'Zoom', position: 0 },
                     { shortcuts: ['-'], description: 'Zoom out to element or viewport', group: 'Zoom', position: 1 },
                     { shortcuts: ['CTRL', '0'], description: 'Reset zoom to default', group: 'Zoom', position: 2 },
