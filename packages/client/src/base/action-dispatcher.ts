@@ -13,13 +13,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { Action, ActionDispatcher, RequestAction, ResponseAction } from '~glsp-sprotty';
 import { ModelInitializationConstraint } from './model-initialization-constraint';
 
+@injectable()
 export class GLSPActionDispatcher extends ActionDispatcher {
     protected readonly timeouts: Map<string, NodeJS.Timeout> = new Map();
     protected initializedConstraint = false;
+
     @inject(ModelInitializationConstraint) protected initializationConstraint: ModelInitializationConstraint;
 
     override initialize(): Promise<void> {
@@ -36,6 +38,10 @@ export class GLSPActionDispatcher extends ActionDispatcher {
 
     onceModelInitialized(): Promise<void> {
         return this.initializationConstraint.onInitialized();
+    }
+
+    hasHandler(action: Action): boolean {
+        return this.actionHandlerRegistry.get(action.kind).length > 0;
     }
 
     override dispatch(action: Action): Promise<void> {

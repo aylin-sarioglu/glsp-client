@@ -36,7 +36,7 @@ export class KeyShortcutTool extends BaseGLSPTool {
         this.keytool.register(this.shortcutKeyListener);
     }
 
-    disable(): void {
+    override disable(): void {
         this.keytool.deregister(this.shortcutKeyListener);
     }
 }

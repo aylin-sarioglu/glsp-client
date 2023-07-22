@@ -31,9 +31,10 @@ import {
     SModelRootSchema,
     SetPopupModelAction
 } from '~glsp-sprotty';
-import { FocusStateChangedAction } from '../../base/actions/focus-change-action';
-import { EdgeCreationTool } from '../tools/edge-creation-tool';
+import { FocusStateChangedAction } from '../../base/focus/focus-state-change-action';
+import { EdgeCreationTool } from '../tools/edge-creation/edge-creation-tool';
 import { GIssueMarker, getSeverity } from '../validation/issue-marker';
+
 @injectable()
 export class GlspHoverMouseListener extends HoverMouseListener implements IActionHandler {
     protected enableHover = true;
