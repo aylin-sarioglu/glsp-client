@@ -48,7 +48,7 @@ export namespace SetAccessibleKeyShortcutAction {
 }
 
 @injectable()
-export class AccessibleKeyShortcut extends AbstractUIExtension implements IActionHandler {
+export class KeyShortcutUIExtension extends AbstractUIExtension implements IActionHandler {
     static ID = 'key-shortcut';
     protected container: HTMLDivElement;
     protected shortcutsContainer: HTMLDivElement;
@@ -63,10 +63,10 @@ export class AccessibleKeyShortcut extends AbstractUIExtension implements IActio
         }
     }
     id(): string {
-        return AccessibleKeyShortcut.ID;
+        return KeyShortcutUIExtension.ID;
     }
     containerClass(): string {
-        return AccessibleKeyShortcut.ID;
+        return KeyShortcutUIExtension.ID;
     }
 
     override show(root: Readonly<SModelRoot>, ...contextElementIds: string[]): void {

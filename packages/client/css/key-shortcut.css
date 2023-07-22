@@ -73,7 +73,6 @@
     display: block;
     z-index: 1000;
     color: black;
-    user-select: none;
 }
 
 .shortcut-entry-container {
