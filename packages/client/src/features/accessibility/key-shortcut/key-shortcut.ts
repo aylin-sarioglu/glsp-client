@@ -16,7 +16,7 @@
 
 import { injectable } from 'inversify';
 import { groupBy } from 'lodash';
-import { AbstractUIExtension, Action, IActionHandler, ICommand, SModelRoot } from '~glsp-sprotty';
+import { AbstractUIExtension, Action, IActionHandler, ICommand, matchesKeystroke, SModelRoot } from '~glsp-sprotty';
 
 export interface KeyShortcutProvider {
     registerShortcutKey(): void;
@@ -76,7 +76,7 @@ export class KeyShortcut extends AbstractUIExtension implements IActionHandler {
     protected refreshUI(): void {
         this.shortcutsContainer.innerHTML = '';
 
-        const registrations = values(this.registrations);
+        const registrations = this.values(this.registrations);
         registrations.sort((a, b) => {
             if (a.group < b.group) {
                 return -1;
@@ -170,7 +170,7 @@ export class KeyShortcut extends AbstractUIExtension implements IActionHandler {
         this.shortcutsContainer.classList.add('keyboard-shortcuts-container');
         this.shortcutsContainer.tabIndex = 30;
         this.shortcutsContainer.addEventListener('keydown', (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
+            if (event.key === 'Escape' || matchesKeystroke(event, 'KeyH', 'alt')) {
                 this.hide();
             }
         });
@@ -181,7 +181,8 @@ export class KeyShortcut extends AbstractUIExtension implements IActionHandler {
 
         this.refreshUI();
     }
-}
-function values(obj: { [key: symbol]: KeyShortcutInterface[] }): KeyShortcutInterface[] {
-    return Object.getOwnPropertySymbols(obj).flatMap(s => obj[s]);
+
+    values(obj: { [key: symbol]: KeyShortcutInterface[] }): KeyShortcutInterface[] {
+        return Object.getOwnPropertySymbols(obj).flatMap(s => obj[s]);
+    }
 }

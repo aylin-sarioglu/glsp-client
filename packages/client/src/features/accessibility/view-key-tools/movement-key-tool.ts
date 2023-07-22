@@ -77,7 +77,7 @@ export class MoveKeyListener extends KeyListener implements KeyShortcutProvider 
         this.tool.actionDispatcher.onceModelInitialized().then(() => {
             this.tool.actionDispatcher.dispatchAll([
                 SetKeyShortcutAction.create(this.token, [
-                    { shortcuts: ['⬅ ⬆ ➡ ⬇'], description: 'Move element or viewport', group: 'Move', position: 0 }
+                    { shortcuts: ['⬅  ⬆  ➡  ⬇'], description: 'Move element or viewport', group: 'Move', position: 0 }
                 ])
             ]);
         });
